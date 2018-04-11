@@ -1,0 +1,24 @@
+version: '3'
+services:
+  php:
+    container_name: php
+    build: 
+      context: ./dockerfiles/php
+    command: php -S 0.0.0.0:9090 -t /app
+    volumes:
+       - ./apps:/app
+    ports:
+      - "9090:9090"
+    links: 
+      - mysql
+
+  mysql:
+    container_name: mysql
+    image: leafney/docker-alpine-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PWD=mysql
+      - MYSQL_USER=myuser
+      - MYSQL_USER_PWD=password
+      - MYSQL_USER_DB=wp
